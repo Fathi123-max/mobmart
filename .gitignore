@@ -1,0 +1,9 @@
+# Firebase files
+google-services.json
+GoogleService-Info.plist
+
+# Firebase SDK downloaded files
+/ios/Pods/
+/android/app/google-services.json
+/android/app/src/debug/google-services.json
+/android/app/src/release/google-services.json
