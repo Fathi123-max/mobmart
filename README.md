@@ -34,6 +34,4 @@ A new open source E-commerce App created using Flutter and GetX.
 - Using MVVM architecture and clean code.
 
 Give a ⭐️ if you like the project.. Thanks!
-# hamad
-# hamad
-# mobmart
+
