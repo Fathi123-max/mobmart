@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../core/viewmodel/auth_viewmodel.dart';
-import 'register_view.dart';
 import '../../constants.dart';
+import '../../core/viewmodel/auth_viewmodel.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_textFormField.dart';
-import '../widgets/custom_button.dart';
+import 'register_view.dart';
 
 class LoginView extends GetWidget<AuthViewModel> {
   final _formKey = GlobalKey<FormState>();
@@ -125,16 +125,16 @@ class LoginView extends GetWidget<AuthViewModel> {
                 SizedBox(
                   height: 43.h,
                 ),
-                CustomButtonSocial(
-                  title: 'Sign In with Facebook',
-                  image: 'facebook',
-                  onPressedFn: () {
-                    controller.signInWithFacebookAccount();
-                  },
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                // CustomButtonSocial(
+                //   title: 'Sign In with Facebook',
+                //   image: 'facebook',
+                //   onPressedFn: () {
+                //     controller.signInWithFacebookAccount();
+                //   },
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
                 CustomButtonSocial(
                   title: 'Sign In with Google',
                   image: 'google',

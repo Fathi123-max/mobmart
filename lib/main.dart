@@ -10,7 +10,7 @@ import 'view/control_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
   runApp(MyApp());
@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
     return OrientationBuilder(
       builder: (context, orientation) => ScreenUtilInit(
         designSize: orientation == Orientation.portrait
-            ? Size(375, 812)
-            : Size(812, 375),
+            ? const Size(375, 812)
+            : const Size(812, 375),
         builder: (BuildContext context, Widget? child) {
           return GetMaterialApp(
             initialBinding: Binding(),

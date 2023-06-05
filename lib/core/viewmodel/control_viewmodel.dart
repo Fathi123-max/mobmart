@@ -10,7 +10,8 @@ class ControlViewModel extends GetxController {
   int _navigatorIndex = 0;
   double locationLat = 0.0;
   double locationLag = 0.0;
-  List<String> words = ["cairo", "egpr ", "45465", "dfjh"];
+
+  List<String> words = ["Enter Your Location Here"];
   Widget get currentScreen => _currentScreen;
 
   int get navigatorIndex => _navigatorIndex;

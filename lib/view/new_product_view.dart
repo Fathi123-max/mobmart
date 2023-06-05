@@ -45,6 +45,7 @@ class _ProductDetailViewNewState extends State<ProductDetailViewNew> {
                 ),
               );
               Get.showSnackbar(GetSnackBar(
+                duration: Duration(milliseconds: 1000),
                 message: "${widget.productModel.name!} added to Cart",
               ));
             },
@@ -59,7 +60,7 @@ class _ProductDetailViewNewState extends State<ProductDetailViewNew> {
                       width: 100.w,
                       height: 100.h,
                       decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Colors.green,
                         borderRadius: BorderRadius.circular(15.r),
                       ),
                       child: Icon(
@@ -171,7 +172,7 @@ class _ProductDetailViewNewState extends State<ProductDetailViewNew> {
                     bottom: size.height * .05,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.orange[100],
+                        color: Colors.green[100],
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30.r),
                           topRight: Radius.circular(30.r),

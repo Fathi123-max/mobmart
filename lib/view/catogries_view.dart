@@ -83,8 +83,7 @@ class CategoriesView extends StatelessWidget {
                     child: Container(
                       width: 190.w,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             decoration: BoxDecoration(
@@ -99,8 +98,8 @@ class CategoriesView extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.all(16.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
                                   text: catogries[index].name,

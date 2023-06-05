@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 import '../core/viewmodel/checkout_viewmodel.dart';
 import '../core/viewmodel/home_viewmodel.dart';
@@ -20,7 +21,7 @@ class HomeView extends StatelessWidget {
       body: GetBuilder<HomeViewModel>(
         init: Get.find<HomeViewModel>(),
         builder: (controller) => controller.loading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : SingleChildScrollView(
@@ -272,8 +273,8 @@ class BannerView extends StatelessWidget {
                 options: CarouselOptions(
                   height: 220.h,
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 1000),
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 1000),
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enableInfiniteScroll: true,
                   scrollDirection: Axis.horizontal,
@@ -292,7 +293,54 @@ class BannerView extends StatelessWidget {
   }
 }
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
+  @override
+  _SearchBarState createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  late stt.SpeechToText _speech;
+  bool _isListening = false;
+  String? _searchQuery;
+
+  @override
+  void initState() {
+    super.initState();
+    _speech = stt.SpeechToText();
+  }
+
+  void _startListening() async {
+    if (!_isListening) {
+      bool available = await _speech.initialize(
+        onStatus: (status) {
+          print('Speech status: $status');
+        },
+        onError: (error) {
+          print('Speech error: $error');
+        },
+      );
+      if (available) {
+        setState(() => _isListening = true);
+
+        _speech.listen(
+          onResult: (result) {
+            setState(() {
+              _searchQuery = result.recognizedWords;
+              Get.to(SearchView(result.recognizedWords));
+            });
+          },
+        );
+      }
+    }
+  }
+
+  void _stopListening() {
+    if (_isListening) {
+      _speech.stop();
+      setState(() => _isListening = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -304,13 +352,13 @@ class SearchBar extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(width: 16.w),
-          Icon(
+          const Icon(
             Icons.search,
             color: Colors.black,
           ),
           SizedBox(width: 16.w),
           Expanded(
-            child: TextField(
+            child: TextFormField(
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Search',
@@ -319,19 +367,28 @@ class SearchBar extends StatelessWidget {
                   color: Colors.grey.shade600,
                 ),
               ),
-              onSubmitted: (value) {
-                Get.to(SearchView(value));
+              onChanged: (value) {
+                setState(() => _searchQuery = value);
+              },
+              onFieldSubmitted: (value) {
+                setState(() {
+                  _searchQuery = value;
+                  Get.to(SearchView(value));
+                });
               },
             ),
           ),
           SizedBox(width: 16.w),
           IconButton(
-            icon: Icon(
-              Icons.mic,
-              color: Colors.black,
-            ),
+            icon: _isListening
+                ? const Icon(Icons.mic_off, color: Colors.black)
+                : const Icon(Icons.mic, color: Colors.black),
             onPressed: () {
-              // Handle voice search here
+              if (_isListening) {
+                _stopListening();
+              } else {
+                _startListening();
+              }
             },
           ),
         ],

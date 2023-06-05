@@ -69,7 +69,7 @@ class CheckoutView extends StatelessWidget {
                           height: 20.h,
                         ),
                         CustomButton(
-                          "get auto  Location",
+                          "Get Location Auto",
                           () {
                             Get.to(() => GetLocation());
                           },
@@ -81,9 +81,8 @@ class CheckoutView extends StatelessWidget {
                           title: 'Locaiton',
                           initialValue:
                               Get.put<ControlViewModel>(ControlViewModel())
-                                      .words
-                                      .toString() ??
-                                  "street",
+                                  .words
+                                  .join(","),
                           hintText: "your location",
                           validatorFn: (value) {
                             if (value!.isEmpty || value.length < 4)
