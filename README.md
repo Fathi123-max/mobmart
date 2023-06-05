@@ -4,7 +4,7 @@ Main repository https://github.com/AhmedLSayed9/shopzler
 
 A new open source E-commerce App created using Flutter and GetX.
 
-[![Watch the video](https://imgur.com/46eoAfw)](https://youtu.be/XsEb2Ns2eWE)
+<img src="https://user-images.githubusercontent.com/70890146/134294381-389c3eb9-9d3b-4f31-b45d-d0577649401c.jpg" alt="Image" width="300"/>(https://youtu.be/XsEb2Ns2eWE)
 
 ## ScreenShots
 
