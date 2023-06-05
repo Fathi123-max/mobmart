@@ -20,7 +20,15 @@ Click Photo to Show Video Preview. 👉
 </p>
 
 ## Features :
-
+***
+new features
+***
+- add map 
+- new design 
+- voice to text (has a small problem)
+- add offers 
+- add link to whatsapp (Hashed  in submit  button )
+***
 - Sign-In, Sign-Up and LogOut using Email & Password / Google Account / Facebook Account.
 - Categories and Search for Products.
 - Add/Remove Products to/from Cart.
