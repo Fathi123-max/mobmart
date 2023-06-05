@@ -1,5 +1,5 @@
 # Shopzler
-@AhmedLSayed9
+
 
 A new open source E-commerce App created using Flutter and GetX.
 
