@@ -1,5 +1,6 @@
 # Shopzler
 
+Main repository https://github.com/AhmedLSayed9/shopzler
 
 A new open source E-commerce App created using Flutter and GetX.
 
