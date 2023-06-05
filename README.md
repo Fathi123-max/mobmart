@@ -23,7 +23,7 @@ Click Photo to Show Video Preview. 👉
 ***
 new features
 ***
-- add map 
+- add Maps and Get Location 
 - new design 
 - voice to text (has a small problem)
 - add offers 
