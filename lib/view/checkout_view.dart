@@ -198,7 +198,7 @@ class CheckoutView extends StatelessWidget {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               await controller.addCheckoutToFireStore();
-                              launchWhatsApp();
+                              // launchWhatsApp();
 
                               Get.dialog(
                                 AlertDialog(

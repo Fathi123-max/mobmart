@@ -301,7 +301,6 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
-  String? _searchQuery;
 
   @override
   void initState() {
@@ -325,7 +324,6 @@ class _SearchBarState extends State<SearchBar> {
         _speech.listen(
           onResult: (result) {
             setState(() {
-              _searchQuery = result.recognizedWords;
               Get.to(SearchView(result.recognizedWords));
             });
           },
@@ -367,30 +365,30 @@ class _SearchBarState extends State<SearchBar> {
                   color: Colors.grey.shade600,
                 ),
               ),
-              onChanged: (value) {
-                setState(() => _searchQuery = value);
-              },
+              onChanged: (value) {},
               onFieldSubmitted: (value) {
                 setState(() {
-                  _searchQuery = value;
                   Get.to(SearchView(value));
                 });
               },
             ),
           ),
           SizedBox(width: 16.w),
-          IconButton(
-            icon: _isListening
-                ? const Icon(Icons.mic_off, color: Colors.black)
-                : const Icon(Icons.mic, color: Colors.black),
-            onPressed: () {
-              if (_isListening) {
-                _stopListening();
-              } else {
-                _startListening();
-              }
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.send),
+          //   onPressed: () {},
+
+          //   // icon: _isListening
+          //   //     ? const Icon(Icons.mic_off, color: Colors.black)
+          //   //     : const Icon(Icons.mic, color: Colors.black),
+          //   // onPressed: () {
+          //   //   if (_isListening) {
+          //   //     _stopListening();
+          //   //   } else {
+          //   //     _startListening();
+          //   //   }
+          //   // },
+          // ),
         ],
       ),
     );
