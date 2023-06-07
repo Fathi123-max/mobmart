@@ -48,11 +48,11 @@ class _SearchViewState extends State<SearchView> {
                 children: [
                   IconButton(
                     padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(),
+                    constraints: const BoxConstraints(),
                     onPressed: () {
                       Get.back();
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back_ios,
                       color: Colors.black,
                     ),
@@ -78,7 +78,7 @@ class _SearchViewState extends State<SearchView> {
                 borderRadius: BorderRadius.circular(45.r),
               ),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
                     Icons.search,
@@ -117,7 +117,7 @@ class _SearchViewState extends State<SearchView> {
                         Get.to(
                             // ProductDetailView(controller.products[index]),
                             ProductDetailViewNew(
-                          productModel: controller.products[index],
+                          productModel: _searchProducts[index],
                         ));
                       },
                       child: Container(
@@ -130,8 +130,8 @@ class _SearchViewState extends State<SearchView> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12.r),
                                 image: DecorationImage(
-                                  image: NetworkImage(controller
-                                      .products[index].images!.first!),
+                                  image: NetworkImage(
+                                      _searchProducts[index].images!.first!),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -145,7 +145,7 @@ class _SearchViewState extends State<SearchView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
-                                    text: controller.products[index].name!,
+                                    text: _searchProducts[index].name!,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -156,7 +156,7 @@ class _SearchViewState extends State<SearchView> {
                                     children: [
                                       CustomText(
                                         text:
-                                            '\$${controller.products[index].price}',
+                                            '\$${_searchProducts[index].price}',
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),

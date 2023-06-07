@@ -78,30 +78,33 @@ class _ProductDetailViewNewState extends State<ProductDetailViewNew> {
             left: 0,
             right: 0,
             bottom: size.height * .25,
-            child: CarouselSlider(
-              items: photos.map((imageUrl) {
-                return Image.network(
-                  imageUrl.toString(),
-                  fit: BoxFit.fill,
-                );
-              }).toList(),
-              options: CarouselOptions(
-                height: size.height * .6,
-                pageSnapping: true,
-                autoPlay: true,
-                viewportFraction: 1,
-                pauseAutoPlayInFiniteScroll: true,
-                pauseAutoPlayOnManualNavigate: true,
-                enableInfiniteScroll: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                onPageChanged: (index, reason) {
-                  // keep track of current index
-                  setState(() {
-                    _current = index;
-                  });
-                },
-                scrollDirection: Axis.horizontal,
+            child: Container(
+              width: double.infinity,
+              child: CarouselSlider(
+                items: photos.map((imageUrl) {
+                  return Image.network(
+                    imageUrl.toString(),
+                    fit: BoxFit.fill,
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                  height: size.height * .8,
+                  // pageSnapping: true,
+                  autoPlay: true,
+                  viewportFraction: 1,
+                  pauseAutoPlayInFiniteScroll: true,
+                  pauseAutoPlayOnManualNavigate: true,
+                  enableInfiniteScroll: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  onPageChanged: (index, reason) {
+                    // keep track of current index
+                    setState(() {
+                      _current = index;
+                    });
+                  },
+                  scrollDirection: Axis.horizontal,
+                ),
               ),
             ),
           ),

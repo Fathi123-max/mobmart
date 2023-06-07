@@ -170,19 +170,19 @@ class CheckoutView extends StatelessWidget {
                         // SizedBox(
                         //   height: 20.h,
                         // ),
-                        CustomTextFormField(
-                          title: 'Phone Number',
-                          hintText: '+20123456789',
-                          keyboardType: TextInputType.phone,
-                          validatorFn: (value) {
-                            if (value!.isEmpty || value.length < 10)
-                              return 'Please enter valid number.';
-                            return null;
-                          },
-                          onSavedFn: (value) {
-                            controller.phone = value;
-                          },
-                        ),
+                        // CustomTextFormField(
+                        //   title: 'Phone Number',
+                        //   hintText: '+20123456789',
+                        //   keyboardType: TextInputType.phone,
+                        //   validatorFn: (value) {
+                        //     if (value!.isEmpty || value.length < 10)
+                        //       return 'Please enter valid number.';
+                        //     return null;
+                        //   },
+                        //   onSavedFn: (value) {
+                        //     controller.phone = value;
+                        //   },
+                        // ),
                         SizedBox(
                           height: 38.h,
                         ),
@@ -195,10 +195,11 @@ class CheckoutView extends StatelessWidget {
                             controller.city = "dammita";
                             controller.country = "Egypt";
                             controller.state = "new dammita";
+                            controller.phone = "01024021764";
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               await controller.addCheckoutToFireStore();
-                              // launchWhatsApp();
+                              launchWhatsApp();
 
                               Get.dialog(
                                 AlertDialog(
@@ -255,16 +256,15 @@ launchWhatsApp() async {
         phoneNumber: '+201024021764',
         text: Get.put<CartViewModel>(CartViewModel())
                 .cartProducts
-                .map((e) => '''Product name :${e.name}
-Quantity: ${e.quantity}
-                 Price : ${int.parse(e.price) * e.quantity}''')
+                .map((e) => '''Product name :${e.name} 
+Quantity: ${e.quantity}                 Price : ${int.parse(e.price) * e.quantity}''')
                 .toList()
                 .toString() +
-            """
-Total : """ +
+            "Total : " +
             Get.put<CartViewModel>(CartViewModel()).totalPrice.toString() +
-            "my Location: " +
+            "Location Link : " +
             "https://www.google.com/maps/@${Get.put<ControlViewModel>(ControlViewModel()).locationLat.toString()},${Get.put<ControlViewModel>(ControlViewModel()).locationLag.toString()},15z?entry=ttu");
+
     await launch('$link');
   } catch (e) {
     print(e);

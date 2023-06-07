@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 import '../core/viewmodel/checkout_viewmodel.dart';
 import '../core/viewmodel/home_viewmodel.dart';
@@ -66,14 +65,14 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          text: 'Best Selling',
+                          text: 'All Products',
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                         GestureDetector(
                           onTap: () {
                             Get.to(CategoryProductsView(
-                              categoryName: 'Best Selling',
+                              categoryName: 'All Products',
                               products: controller.products,
                             ));
                           },
@@ -85,9 +84,9 @@ class HomeView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 30.h,
+                      height: 10.h,
                     ),
-                    ListViewProducts(),
+                    GridViewProducts(),
                   ],
                 ),
               ),
@@ -167,16 +166,20 @@ class ListViewCategories extends StatelessWidget {
   }
 }
 
-class ListViewProducts extends StatelessWidget {
+class GridViewProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
-      builder: (controller) => Container(
-        height: 290.h,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: controller.products.length,
-          itemBuilder: (context, index) {
+      builder: (controller) => GridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 20.h,
+        crossAxisSpacing: 15.w,
+        childAspectRatio: .60,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        children: List.generate(
+          controller.products.length,
+          (index) {
             return GestureDetector(
               onTap: () {
                 Get.to(ProductDetailViewNew(
@@ -201,10 +204,10 @@ class ListViewProducts extends StatelessWidget {
                         ),
                       ),
                       height: 200.h,
-                      width: 164.w,
+                      width: double.infinity,
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.w),
+                      padding: EdgeInsets.all(8.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -230,11 +233,6 @@ class ListViewProducts extends StatelessWidget {
                   ],
                 ),
               ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return SizedBox(
-              width: 15.w,
             );
           },
         ),
@@ -294,50 +292,52 @@ class BannerView extends StatelessWidget {
 }
 
 class SearchBar extends StatefulWidget {
+  const SearchBar({Key? key}) : super(key: key);
+
   @override
   _SearchBarState createState() => _SearchBarState();
 }
 
 class _SearchBarState extends State<SearchBar> {
-  late stt.SpeechToText _speech;
-  bool _isListening = false;
+  // late stt.SpeechToText _speech;
+  // bool _isListening = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _speech = stt.SpeechToText();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _speech = stt.SpeechToText();
+  // }
 
-  void _startListening() async {
-    if (!_isListening) {
-      bool available = await _speech.initialize(
-        onStatus: (status) {
-          print('Speech status: $status');
-        },
-        onError: (error) {
-          print('Speech error: $error');
-        },
-      );
-      if (available) {
-        setState(() => _isListening = true);
+  // void _startListening() async {
+  //   if (!_isListening) {
+  //     bool available = await _speech.initialize(
+  //       onStatus: (status) {
+  //         print('Speech status: $status');
+  //       },
+  //       onError: (error) {
+  //         print('Speech error: $error');
+  //       },
+  //     );
+  //     if (available) {
+  //       setState(() => _isListening = true);
 
-        _speech.listen(
-          onResult: (result) {
-            setState(() {
-              Get.to(SearchView(result.recognizedWords));
-            });
-          },
-        );
-      }
-    }
-  }
+  //       _speech.listen(
+  //         onResult: (result) {
+  //           setState(() {
+  //             Get.to(SearchView(result.recognizedWords));
+  //           });
+  //         },
+  //       );
+  //     }
+  //   }
+  // }
 
-  void _stopListening() {
-    if (_isListening) {
-      _speech.stop();
-      setState(() => _isListening = false);
-    }
-  }
+  // void _stopListening() {
+  //   if (_isListening) {
+  //     _speech.stop();
+  //     setState(() => _isListening = false);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -390,6 +390,132 @@ class _SearchBarState extends State<SearchBar> {
           //   // },
           // ),
         ],
+      ),
+    );
+  }
+}
+
+class ListViewProducts extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeViewModel>(
+      builder: (controller) => ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: controller.products.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Get.to(ProductDetailViewNew(
+                productModel: controller.products[index],
+              )
+                  // ProductDetailView(controller.products[index]),
+                  );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 165.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                controller.products[index].images!.first!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        height: 200.h,
+                        width: double.infinity,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: controller.products[index].name!,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            SizedBox(height: 4.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomText(
+                                  text: '\$${controller.products[index].price}',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 165.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                controller.products[index + 1].images!.first!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        height: 200.h,
+                        width: double.infinity,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: controller.products[index + 1].name!,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            SizedBox(height: 4.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomText(
+                                  text:
+                                      '\$${controller.products[index + 1].price}',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            height: 15.h,
+          );
+        },
       ),
     );
   }
